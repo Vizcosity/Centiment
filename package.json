@@ -1,0 +1,19 @@
+{
+  "name": "sentiment",
+  "version": "0.1.0",
+  "description": "A simple aggregator for determining the general sentiment about a given cryptocurrency",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\u0016https://github.com/Vizcosity/Sentiment"
+  },
+  "keywords": [
+    "cryptocurrency",
+    "news"
+  ],
+  "author": "Aaron Baw",
+  "license": "ISC"
+}
