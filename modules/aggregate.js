@@ -42,10 +42,6 @@ module.exports = (cid, limit) => new Promise((resolve, reject) => {
       var wholeText = ""; // We will accumulate all text and then summarize at end.
       analysedArticles.forEach(article => {
 
-        console.log(`Article score: ${article.sentiment.score}`);
-        console.log(`Current highest: ${output.sentiment.highest.sentiment.score}`);
-        console.log(`Current lowest: ${output.sentiment.lowest.sentiment.score}`);
-
         // Check highest and lowest sentiments (highlights) and update accordingly.
         output.sentiment.highest =
           (article.sentiment.score > output.sentiment.highest.sentiment.score ?
