@@ -6,14 +6,22 @@
 const request = require('request');
 const article = require('article');
 const sentiment = require('sentiment');
+const in_a = require('in-a-nutshell');
 
  // Register module.
  module.exports = (url) => new Promise((resolve, reject) => {
 
    getAndParseArticle(url)
    .then(article => {
+
+     if (!article) return reject(`Article could not be parsed.`);
+
      // Run sentiment analysis on article body
-     return resolve(sentiment(article.text));
+     return resolve({
+       title: article.title,
+       summary: in_a.nutshell(article.text),
+       sentiment: sentiment(article.text)
+     });
    })
    .catch(err => reject(err));
 
