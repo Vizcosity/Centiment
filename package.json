@@ -1,5 +1,5 @@
 {
-  "name": "sentiment",
+  "name": "centiment",
   "version": "0.1.0",
   "description": "A simple aggregator for determining the general sentiment about a given cryptocurrency",
   "main": "main.js",
@@ -15,5 +15,10 @@
     "news"
   ],
   "author": "Aaron Baw",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "article": "^1.1.2",
+    "request": "^2.83.0",
+    "sentiment": "^4.1.0"
+  }
 }

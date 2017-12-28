@@ -1,0 +1,7 @@
+{
+  "api":{
+    "token": "9ee52415d2100017f2a0c85df3002785477b7dc2",
+    "url": "https://cryptopanic.com/"
+  },
+  "currencies": ["BTC", "LTC", "ETH"]
+}
