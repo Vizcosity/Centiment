@@ -6,6 +6,7 @@
 
 const getNewsLinks = require('./getNewsLinks');
 const analyseArticle = require('./analyseArticle');
+const in_a = require('in-a-nutshell');
 
 // Module entry point.
 module.exports = (cid) => new Promise((resolve, reject) => {
@@ -20,10 +21,52 @@ module.exports = (cid) => new Promise((resolve, reject) => {
     // We will then attach the article analysis to the current link item.
     analyseAll(links, (analysedArticles) => {
 
+      log(`Analysed all links. ${analysedArticles.length}`);
+
       // Calculate the average sentiment, highlight the highest and lowest
       // sentiment articles, and return a summary of all text.
-      console.log(analysedArticles);
+
+      // Create output object.
+      var output = {
+        analysed: analysedArticles,
+        sentiment: {
+          highest: analysedArticles[0],
+          lowest: analysedArticles[0],
+          average: 0,
+          total: 0
+        },
+        summary: ""
+      };
+
+      // Find highest, lowest (highlights) and average.
+      var wholeText = ""; // We will accumulate all text and then summarize at end.
+      analysedArticles.forEach(article => {
+
+        // Check highest and lowest sentiments (highlights) and update accordingly.
+        output.sentiment.highest =
+          (article.sentiment.score > output.sentiment.highest.score ?
+            article.sentiment : output.sentiment.highest);
+        output.sentiment.lowest =
+          (article.sentiment.score < output.sentiment.lowest.score ?
+            article.sentiment : output.sentiment.lowest);
+
+        output.sentiment.total += article.sentiment.score;
+
+        wholeText += '\n' + article.summary;
+
+      });
+
+      // Calculate average and summarise wholeText.
+      output.sentiment.average = Math.round(output.sentiment.total / analysedArticles.length);
+      output.summary = in_a.nutshell(wholeText);
+
+      // Resolve promise.
+      return resolve(output);
+
+
     });
+
+
 
   });
 
@@ -36,8 +79,6 @@ function analyseAll(links, callback, output){
   if (!links || links.length === 0) return callback(output);
 
   var ci = links.shift();
-
-  console.log(ci);
 
   log(`Analysing ${ci.title} [${links.length} left]`);
 
