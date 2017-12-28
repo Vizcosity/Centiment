@@ -11,7 +11,7 @@ const cryptoNameDict = require('cryptocurrencies');
 // Scrapes google news for articles regarding the currency of interest.
 const scrapeNews = require('my-google-news');
 
-module.exports = (cid) => new Promise((resolve, reject) => {
+module.exports = (cid, limit) => new Promise((resolve, reject) => {
 
   cid = cid.toUpperCase();
 
@@ -20,7 +20,7 @@ module.exports = (cid) => new Promise((resolve, reject) => {
   var query = cid + (cryptoNameDict[cid] ? ` OR ${cryptoNameDict[cid]}` : "");
 
   // Set max results per page for 100 for less pagination.
-  scrapeNews.resultsPerPage = 100;
+  scrapeNews.resultsPerPage = (limit ? limit : 100);
 
   // Output array containing links.
   var links = [];
@@ -32,7 +32,7 @@ module.exports = (cid) => new Promise((resolve, reject) => {
     links.push(...res.links);
 
     // Continue looping until fail.
-    if (res.next) return res.next();
+    if (res.next && !limit) return res.next();
 
     // Otherwise we resolve with all links we have gathered thus far.
     return resolve(links);

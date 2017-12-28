@@ -9,10 +9,10 @@ const analyseArticle = require('./analyseArticle');
 const in_a = require('in-a-nutshell');
 
 // Module entry point.
-module.exports = (cid) => new Promise((resolve, reject) => {
+module.exports = (cid, limit) => new Promise((resolve, reject) => {
 
   // Get news links for the currency.
-  getNewsLinks(cid)
+  getNewsLinks(cid, limit)
   .then(links => {
 
     log(`Obtained ${links.length} links. Analysing now.`);
@@ -42,13 +42,18 @@ module.exports = (cid) => new Promise((resolve, reject) => {
       var wholeText = ""; // We will accumulate all text and then summarize at end.
       analysedArticles.forEach(article => {
 
+        console.log(`Article score: ${article.sentiment.score}`);
+        console.log(`Current highest: ${output.sentiment.highest.sentiment.score}`);
+        console.log(`Current lowest: ${output.sentiment.lowest.sentiment.score}`);
+
         // Check highest and lowest sentiments (highlights) and update accordingly.
         output.sentiment.highest =
-          (article.sentiment.score > output.sentiment.highest.score ?
-            article.sentiment : output.sentiment.highest);
+          (article.sentiment.score > output.sentiment.highest.sentiment.score ?
+            article : output.sentiment.highest);
+
         output.sentiment.lowest =
-          (article.sentiment.score < output.sentiment.lowest.score ?
-            article.sentiment : output.sentiment.lowest);
+          (article.sentiment.score < output.sentiment.lowest.sentiment.score ?
+            article : output.sentiment.lowest);
 
         output.sentiment.total += article.sentiment.score;
 
@@ -59,6 +64,8 @@ module.exports = (cid) => new Promise((resolve, reject) => {
       // Calculate average and summarise wholeText.
       output.sentiment.average = Math.round(output.sentiment.total / analysedArticles.length);
       output.summary = in_a.nutshell(wholeText);
+
+      log(`Finished analysis`);
 
       // Resolve promise.
       return resolve(output);
