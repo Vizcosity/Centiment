@@ -5,6 +5,9 @@
 
 // Dependencies.
 
+// TODO: Filter out links which do not contain the passed currency as one of the
+// subjects or main topic (filter out irrelevant posts, etc).
+
 // Allows us to resolve full name of currency from CID.
 const cryptoNameDict = require('cryptocurrencies');
 
@@ -16,8 +19,8 @@ module.exports = (cid, limit) => new Promise((resolve, reject) => {
   cid = cid.toUpperCase();
 
   // If fullname exists in the dictionary, use this as part of the search query
-  // as well.
-  var query = cid + (cryptoNameDict[cid] ? ` OR ${cryptoNameDict[cid]}` : "");
+  // as well, if not append 'coin' to the end of the search query.
+  var query = cid + (cryptoNameDict[cid] ? ` OR ${cryptoNameDict[cid]}` : " coin");
 
   // Set max results per page for 100 for less pagination.
   scrapeNews.resultsPerPage = (limit ? limit : 100);
