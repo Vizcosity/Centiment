@@ -33,7 +33,9 @@ const insertToDB = (cid, data) => new Promise((resolve, reject) => {
 
 // Collects aggregate data for the CID and saves it to the DB.
 const aggregateToDB = (cid) => new Promise((resolve, reject) => {
-  return aggregate(cid, 10).then(data => insertToDB(cid, data));
+  return aggregate(cid, 10)
+  .then(data => insertToDB(cid, data))
+  .then(res => resolve(res));
 });
 
 function aggregateAllToDB(cids, cb){
@@ -44,7 +46,7 @@ function aggregateAllToDB(cids, cb){
   log(`Aggregating data for ${ci}`);
 
   aggregateToDB(ci).then(() => {
-    aggregateAllToDB(cids, cb);
+    return aggregateAllToDB(cids, cb);
   })
   .catch(e => log(`Error aggregating ${cid} and adding to the db: ${e}`));
 }
