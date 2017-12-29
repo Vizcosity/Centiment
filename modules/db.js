@@ -50,6 +50,36 @@ connectToPool(pool, (err, client, done) => {
 
   }
 
+  this.queryParam = function(statement, params, callback){
+
+    checkPool(pool, (connection) => {
+
+      // On fail / connection error, retry the query.
+      if (connection.err) {
+        log(`Connection failed. ${connection.err} \n Retrying query...`);
+        return this.query(statement, params, callback);
+      }
+
+      // Run query only if callback present.
+      if (callback)
+        connection.client.query(statement, params,  (err, data) => {
+
+          if (err) {
+            // connection.done();
+            log("Error executing query: " + statement);
+            console.log(err);
+          }
+
+          return callback(err, data);
+
+        });
+
+      else connection.client.query(statement, params);
+
+    });
+
+  }
+
 
 
 // Utiltiy functions.

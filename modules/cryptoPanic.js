@@ -27,7 +27,7 @@ const getCPCurrencyDataFromURL = (url, currencies) => new Promise(resolve => {
 
   request.get(url, (err, results) => {
 
-    if (err) reject(err);
+    if (err) console.log(err);
 
 
     try {
@@ -157,4 +157,6 @@ const scrapeCryptoPanic = () => new Promise(resolve => {
 
 
 // Register the module.
-module.exports = scrapeCryptoPanic;
+module.exports = {
+  scrape: scrapeCryptoPanic
+};

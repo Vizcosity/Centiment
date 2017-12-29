@@ -15,8 +15,8 @@
        var item = data.rows[0];
 
        // If there is no data on the currency, return an empty object.
-       if (Object.keys(item).length === 0) return resolve({});
-       return resolve(data);
+       if (Object.keys(item).length === 0 || !item.data) return resolve({});
+       return resolve(item.data);
      });
    });
 
