@@ -21,6 +21,7 @@
     "cryptocurrencies": "^1.1.1",
     "in-a-nutshell": "^0.1.2",
     "my-google-news": "^3.0.0",
+    "pg": "^7.4.0",
     "request": "^2.83.0",
     "sentiment": "^4.1.0"
   }

@@ -28,7 +28,7 @@ module.exports = (cid, limit) => new Promise((resolve, reject) => {
 
       // Create output object.
       var output = {
-        analysed: analysedArticles,
+        totalAnalysed: analysedArticles.length,
         sentiment: {
           highest: analysedArticles[0],
           lowest: analysedArticles[0],
