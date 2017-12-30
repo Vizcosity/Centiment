@@ -3,8 +3,8 @@
  * sentiment analysis, saving results to the DB.
  */
 
- const cryptoPanic = require('./modules/cryptoPanic');
- const collect = require('./modules/collect');
+ const cryptoPanic = require('../modules/cryptoPanic');
+ const collect = require('../modules/collect');
 
 log(`Collecting hottest currencies from CryptoPanic.`);
 
