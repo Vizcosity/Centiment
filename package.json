@@ -25,5 +25,10 @@
     "pg-escape": "^0.2.0",
     "request": "^2.83.0",
     "sentiment": "^4.1.0"
+  },
+  "devDependencies": {
+    "bulma": "^0.5.3",
+    "ember-bulma": "^0.4.1",
+    "ember-cli-sass": "^6.2.0"
   }
 }
