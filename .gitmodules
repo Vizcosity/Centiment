@@ -1,0 +1,3 @@
+[submodule "centiment-app"]
+  path = centiment-app
+  url = git://github.com/Vizcosity/Centiment-App.git
